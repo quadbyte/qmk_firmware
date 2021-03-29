@@ -22,6 +22,7 @@ enum encoder_names {
 };
 
 #define EXPLORR LGUI(KC_E)
+#define COPYSCR LCTL(KC_PSCREEN)  // Copy portion of screen
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
@@ -32,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [0] = LAYOUT(
         KC_MUTE, EXPLORR, KC_MPLY,
-        MO(1)  , KC_UP  , RGB_MOD,
+        MO(1)  , COPYSCR, RGB_MOD,
         KC_LEFT, KC_DOWN, KC_RGHT
     ),
     /*
@@ -50,23 +51,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (index == _LEFT) {
         if (clockwise) {
-            tap_code(KC_VOLU);
+            tap_code(KC_MS_UP);
         } else {
-            tap_code(KC_VOLD);
+            tap_code(KC_MS_DOWN);
         }
     }
-    else if (index == _MIDDLE) {
-        if (clockwise) {
-            tap_code(KC_DOWN);
-        } else {
-            tap_code(KC_UP);
-        }
-    }
+    // else if (index == _MIDDLE) {
+    //     if (clockwise) {
+    //         tap_code(KC_DOWN);
+    //     } else {
+    //         tap_code(KC_UP);
+    //     }
+    // }
     else if (index == _RIGHT) {
         if (clockwise) {
-            tap_code(KC_PGDN);
+            tap_code(KC_MS_RIGHT);
         } else {
-            tap_code(KC_PGUP);
+            tap_code(KC_MS_LEFT);
         }
     }
 }
