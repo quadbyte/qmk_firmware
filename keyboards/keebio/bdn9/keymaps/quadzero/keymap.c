@@ -23,51 +23,37 @@ enum encoder_names {
 
 #define EXPLORR LGUI(KC_E)
 #define COPYSCR LCTL(KC_PSCREEN)  // Copy portion of screen
+#define COPY    LCTL(KC_C)
+#define CUT     LCTL(KC_X)
+#define PASTE   LCTL(KC_V)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /*
-        | Knob 1: Vol Dn/Up |      | Knob 2: Page Dn/Up |
-        | Press: Mute       | Home | Press: Play/Pause  |
-        | Hold: Layer 2     | Up   | RGB Mode           |
-        | Left              | Down | Right              |
-     */
     [0] = LAYOUT(
-        KC_MUTE, EXPLORR, KC_MPLY,
-        MO(1)  , COPYSCR, RGB_MOD,
-        KC_LEFT, KC_DOWN, KC_RGHT
+         MO(1), EXPLORR, _______,
+       KC_MUTE, COPYSCR, KC_MPLY,
+           CUT,    COPY,   PASTE
     ),
-    /*
-        | RESET          | N/A  | Media Stop |
-        | Held: Layer 2  | Home | RGB Mode   |
-        | Media Previous | End  | Media Next |
-     */
+
     [1] = LAYOUT(
-        RESET  , BL_STEP, KC_STOP,
-        _______, KC_HOME, RGB_MOD,
-        KC_MPRV, KC_END , KC_MNXT
+        RESET  , _______, RGB_MOD,
+        _______, _______, _______,
+        _______, _______, _______
     ),
 };
 
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (index == _LEFT) {
         if (clockwise) {
-            tap_code(KC_MS_UP);
+            tap_code(KC_MS_WH_UP);
         } else {
-            tap_code(KC_MS_DOWN);
+            tap_code(KC_MS_WH_DOWN);
         }
     }
-    // else if (index == _MIDDLE) {
-    //     if (clockwise) {
-    //         tap_code(KC_DOWN);
-    //     } else {
-    //         tap_code(KC_UP);
-    //     }
-    // }
     else if (index == _RIGHT) {
         if (clockwise) {
-            tap_code(KC_MS_RIGHT);
+            tap_code(KC_UP);
         } else {
-            tap_code(KC_MS_LEFT);
+            tap_code(KC_DOWN);
         }
     }
 }
